@@ -1,4 +1,9 @@
 /* General Styles */
+*{
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+}
 body {
   font-family: "Georgia", "Times New Roman", serif;
   overflow-x: hidden;
