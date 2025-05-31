@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Process - Progress High School</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <style>
+        .admission-hero {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.95), rgba(231, 76, 60, 0.95)), url('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+        
+        .admission-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .floating-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #2c3e50;
+        }
+        
+        .step-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid #dc3545;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #dc3545, #ffc107, #28a745);
+        }
+        
+        .step-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+        }
+        
+        .step-number::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #dc3545;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+        
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .document-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .document-item:hover {
+            border-color: #dc3545;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(220, 53, 69, 0.1);
+        }
+        
+        .document-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="80" r="2" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1" fill="white" opacity="0.1"/></svg>');
+        }
+        
+        .timeline-container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 25px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-glow {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            border: none;
+            color: #2c3e50;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.4);
+            color: #2c3e50;
+        }
+        
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #dc3545;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="loader-circle circle-1"></div>
+            <div class="loader-circle circle-2"></div>
+            <div class="loader-circle circle-3"></div>
+            <img src="assets/images/logo.png" alt="Progress High School Logo" class="loader-logo">
+        </div>
+        <div class="loader-text">PROGRESS HIGH SCHOOL</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.png" alt="Progress High School Logo" class="logo me-3">
+                <img src="assets/images/banner-logo.png" alt="Progress High School" class="brand-image">
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-x-lg close-icon"></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="aboutDropdown" role="button" aria-expanded="false">
+                            About Us
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="index.html#welcome">Welcome</a></li>
+                            <li><a class="dropdown-item" href="index.html#leadership">Leadership</a></li>
+                            <li><a class="dropdown-item" href="index.html#vision">Vision & Mission</a></li>
+                            <li><a class="dropdown-item" href="index.html#achievements">Achievements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center active" href="#" id="admissionDropdown" role="button" aria-expanded="false">
+                            Admission
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="admissionDropdown">
+                            <li><a class="dropdown-item active" href="admission-process.html">Admission Process</a></li>
+                            <li><a class="dropdown-item" href="fee-structure.html">Fee Structure</a></li>
+                            <li><a class="dropdown-item" href="apply-online.html">Apply Online</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="academicsDropdown" role="button" aria-expanded="false">
+                            Academics
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="cirriculum.html">Curriculum</a></li>
+                            <li><a class="dropdown-item" href="cirriculum.html#special-programs">Special Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="careers.html">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact-us.html">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="admission-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                        <h1 class="display-3 fw-bold mb-4">Begin Your Journey with Progress</h1>
+                        <p class="lead mb-4">Join thousands of successful students who have transformed their dreams into reality. Our admission process is designed to identify and nurture the potential in every child.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#admission-steps" class="btn btn-glow btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Start Application
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="floating-card">
+                        <h3 class="text-center mb-4">Quick Admission Facts</h3>
+                        <div class="row text-center">
+                            <div class="col-6 mb-3">
+                                <h2 class="text-primary mb-1">98%</h2>
+                                <small>Success Rate</small>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <h2 class="text-success mb-1">24hrs</h2>
+                                <small>Processing Time</small>
+                            </div>
+                            <div class="col-6">
+                                <h2 class="text-warning mb-1">40+</h2>
+                                <small>Qualified Teachers</small>
+                            </div>
+                            <div class="col-6">
+                                <h2 class="text-info mb-1">32+</h2>
+                                <small>Years Experience</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Steps -->
+    <section id="admission-steps" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Simple 4-Step Admission Process</h2>
+                <p class="section-subtitle">Your child's bright future is just 4 steps away</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4" data-aos="fade-right" data-aos-duration="800">
+                    <div class="step-container">
+                        <div class="step-number">1</div>
+                        <h3>Submit Application</h3>
+                        <p class="lead">Complete our user-friendly online application form or visit our campus to fill the form in person.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Online application available 24/7</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Instant confirmation via email</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Application fee: ₹5000 only</li>
+                        </ul>
+                        <a href="apply-online.html" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                    <div class="step-container">
+                        <div class="step-number">2</div>
+                        <h3>Document Submission</h3>
+                        <p class="lead">Upload or submit required documents for verification. Our team will guide you through the process.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Digital document upload</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Document verification within 48 hours</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>SMS/Email status updates</li>
+                        </ul>
+                        <a href="#documents" class="btn btn-primary">View Documents</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
+                    <div class="step-container">
+                        <div class="step-number">3</div>
+                        <h3>Assessment & Interview</h3>
+                        <p class="lead">Attend a friendly assessment session designed to understand your child's learning style and interests.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Age-appropriate assessment</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Parent-child interaction session</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Campus tour included</li>
+                        </ul>
+                        <a href="#schedule" class="btn btn-primary">Schedule Assessment</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4" data-aos="fade-left" data-aos-duration="800" data-aos-delay="600">
+                    <div class="step-container">
+                        <div class="step-number">4</div>
+                        <h3>Welcome to Progress!</h3>
+                        <p class="lead">Receive admission confirmation and complete enrollment. Your child's journey to excellence begins here!</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Instant admission decision</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Welcome kit and orientation</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i>Class allocation and schedule</li>
+                        </ul>
+                        <a href="fee-structure.html" class="btn btn-primary">View Fee Structure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Required Documents -->
+    <section id="documents" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Required Documents</h2>
+                <p class="section-subtitle">Prepare these documents for a smooth admission process</p>
+            </div>
+            
+            <div class="document-grid">
+                <div class="document-item" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="document-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Academic Records</h4>
+                    <ul class="list-unstyled">
+                        <li>• Previous year's report card</li>
+                        <li>• Transfer certificate (if applicable)</li>
+                        <li>• Character certificate</li>
+                        <li>• Migration certificate (for inter-state)</li>
+                    </ul>
+                </div>
+                
+                <div class="document-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
+                    <div class="document-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h4>Identity Proof</h4>
+                    <ul class="list-unstyled">
+                        <li>• Birth certificate (original + copy)</li>
+                        <li>• Aadhaar card of student</li>
+                        <li>• Passport size photos (6 copies)</li>
+                        <li>• Medical fitness certificate</li>
+                    </ul>
+                </div>
+                
+                <div class="document-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
+                    <div class="document-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h4>Address Proof</h4>
+                    <ul class="list-unstyled">
+                        <li>• Electricity/Water bill (latest)</li>
+                        <li>• Rental agreement/Property papers</li>
+                        <li>• Aadhaar card of parents</li>
+                        <li>• Voter ID of parents</li>
+                    </ul>
+                </div>
+                
+                <div class="document-item" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="600">
+                    <div class="document-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <h4>Financial Documents</h4>
+                    <ul class="list-unstyled">
+                        <li>• Income certificate</li>
+                        <li>• Bank account details</li>
+                        <li>• Salary slips (last 3 months)</li>
+                        <li>• Caste certificate (if applicable)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up" data-aos-duration="800">
+                <div class="alert alert-info d-inline-block">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Note:</strong> All documents should be self-attested. Original documents required for verification only.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline-section py-5">
+        <div class="container timeline-container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title text-white">Admission Timeline 2025-26</h2>
+                <p class="section-subtitle text-light">Important dates you shouldn't miss</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-warning rounded-circle p-3 me-3">
+                                <i class="fas fa-calendar-plus text-dark"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Application Opens</h4>
+                                <p class="mb-0 text-warning">May 15, 2025</p>
+                            </div>
+                        </div>
+                        <p>Online and offline application forms become available. Early applications get priority consideration.</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info rounded-circle p-3 me-3">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Application Deadline</h4>
+                                <p class="mb-0 text-info">July 30 , 2025</p>
+                            </div>
+                        </div>
+                        <p>Last date for submission of completed application forms with all required documents.</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success rounded-circle p-3 me-3">
+                                <i class="fas fa-user-check text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Assessment Period</h4>
+                                <p class="mb-0 text-success">June 12, 2025</p>
+                            </div>
+                        </div>
+                        <p>Student assessments and parent interviews will be conducted during this period.</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-left" data-aos-duration="800" data-aos-delay="600">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary rounded-circle p-3 me-3">
+                                <i class="fas fa-trophy text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Results Announcement</h4>
+                                <p class="mb-0 text-primary">June 13, 2025</p>
+                            </div>
+                        </div>
+                        <p>Admission results will be published on our website and communicated via email/SMS.</p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="800">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-danger rounded-circle p-3 me-3">
+                                <i class="fas fa-graduation-cap text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Session Begins</h4>
+                                <p class="mb-0 text-danger">June 13, 2025</p>
+                            </div>
+                        </div>
+                        <p>New academic session starts with orientation program for students and parents.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="cta-section" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="cta-content">
+                    <h2 class="display-4 fw-bold mb-4">Ready to Join Progress Family?</h2>
+                    <p class="lead mb-4">Don't wait! Secure your child's future with quality education at Progress High School. Limited seats available.</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="apply-online.html" class="btn btn-glow btn-lg">
+                            <i class="fas fa-pen-fancy me-2"></i>Apply Online Now
+                        </a>
+                        <a href="tel:+916300816293" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-phone me-2"></i>Call for Assistance
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Need Help? We're Here for You!</h2>
+                <p class="section-subtitle">Our admission counselors are ready to assist you</p>
+            </div>
+            
+            <div class="contact-cards">
+                <div class="contact-card" data-aos="fade-up" data-aos-duration="800">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h4>Call Us</h4>
+                    <p class="text-muted">Speak directly with our admission team</p>
+                    <h5 class="text-primary">+91 6300816293</h5>
+                    <small>Mon-Fri: 9 AM - 6 PM</small>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email Us</h4>
+                    <p class="text-muted">Get detailed information via email</p>
+                    <h6 class="text-primary">admissions@progresshighschool.edu</h6>
+                    <small>Response within 24 hours</small>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Visit Us</h4>
+                    <p class="text-muted">Schedule a campus tour</p>
+                    <h6 class="text-primary">Reddy Colony, Hanamkonda</h6>
+                    <small>Campus tours available daily</small>
+                </div>
+                
+                <div class="contact-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                    <a href="https://wa.me/916300816293" target="_blank" class="text-decoration-none text-dark">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h4>WhatsApp</h4>
+                        <p class="text-muted">Quick queries and instant support</p>
+                        <h5 class="text-success">+91 6300816293</h5>
+                        <small>Available 24/7</small>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer py-5 bg-dark text-white" style="background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%) !important; border-top: 3px solid #dc3545 !important;">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6 col-md-6 mb-3 mb-md-0" data-aos="fade-right" data-aos-duration="800">
+                    <div class="footer-content">
+                        <h5 class="text-white mb-2">Progress High School</h5>
+                        <p class="mb-2 text-light">&copy; 2025 Progress High School. All rights reserved.</p>
+                        <p class="mb-0 text-light small">Empowering minds, shaping futures since 1993</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 text-md-end text-center" data-aos="fade-left" data-aos-duration="800">
+                    <div class="footer-social">
+                        <h6 class="text-white mb-3">Follow Us</h6>
+                        <div class="social-links d-flex justify-content-md-end justify-content-center gap-3">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                once: true,
+                offset: 100,
+                duration: 800,
+                easing: 'ease-in-out'
+            });
+            
+            // Page Loader
+            const loaderWrapper = document.querySelector('.loader-wrapper');
+            
+            // Hide loader after page is fully loaded
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loaderWrapper.style.opacity = '0';
+                    loaderWrapper.style.visibility = 'hidden';
+                    
+                    // Trigger AOS refresh for better animation timing after loader disappears
+                    setTimeout(function() {
+                        AOS.refresh();
+                    }, 500);
+                }, 1500); // Wait 1.5 seconds before hiding loader
+            });
+            
+            // Custom navbar toggler functionality
+            const navbarToggler = document.querySelector('.custom-toggler');
+            const navbarCollapse = document.querySelector('#navbarNav');
+            
+            navbarToggler.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('show.bs.collapse', function() {
+                navbarToggler.classList.add('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('hide.bs.collapse', function() {
+                navbarToggler.classList.remove('collapsed');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

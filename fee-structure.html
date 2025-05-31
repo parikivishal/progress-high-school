@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Structure - Progress High School</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <style>
+        .fee-hero {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.95), rgba(255, 179, 0, 0.95)), url('https://images.unsplash.com/photo-1554224154-26032fced8bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: #2c3e50;
+            position: relative;
+        }
+        
+        .fee-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="coins" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="8" fill="white" opacity="0.1"/><circle cx="10" cy="10" r="3" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23coins)"/></svg>');
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 25px;
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            border-color: #dc3545;
+        }
+        
+        .pricing-card.featured {
+            border-color: #ffc107;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+        }
+        
+        .pricing-header {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .pricing-card.featured .pricing-header {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: #2c3e50;
+        }
+        
+        .pricing-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #dc3545;
+        }
+        
+        .pricing-card.featured .pricing-header::after {
+            border-top-color: #ffc107;
+        }
+        
+        .pricing-body {
+            padding: 2.5rem 2rem;
+        }
+        
+        .price-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-period {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            color: #28a745;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .calculator-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .calculator-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="80" r="2" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1" fill="white" opacity="0.1"/></svg>');
+        }
+        
+        .calculator-container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: white;
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            transform: scale(0);
+            transition: all 0.5s ease;
+        }
+        
+        .result-card.show {
+            transform: scale(1);
+        }
+        
+        .scholarship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .scholarship-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid #ffc107;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scholarship-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .scholarship-card:hover::before {
+            left: 100%;
+        }
+        
+        .scholarship-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .scholarship-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .payment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid #f8f9fa;
+        }
+        
+        .payment-card:hover {
+            border-color: #dc3545;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(220, 53, 69, 0.1);
+        }
+        
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .discount-badge {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        
+        .btn-calculate {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            border: none;
+            color: #2c3e50;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.4);
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="loader-circle circle-1"></div>
+            <div class="loader-circle circle-2"></div>
+            <div class="loader-circle circle-3"></div>
+            <img src="assets/images/logo.png" alt="Progress High School Logo" class="loader-logo">
+        </div>
+        <div class="loader-text">PROGRESS HIGH SCHOOL</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.png" alt="Progress High School Logo" class="logo me-3">
+                <img src="assets/images/banner-logo.png" alt="Progress High School" class="brand-image">
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-x-lg close-icon"></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="aboutDropdown" role="button" aria-expanded="false">
+                            About Us
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="index.html#welcome">Welcome</a></li>
+                            <li><a class="dropdown-item" href="index.html#leadership">Leadership</a></li>
+                            <li><a class="dropdown-item" href="index.html#vision">Vision & Mission</a></li>
+                            <li><a class="dropdown-item" href="index.html#achievements">Achievements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center active" href="#" id="admissionDropdown" role="button" aria-expanded="false">
+                            Admission
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="admissionDropdown">
+                            <li><a class="dropdown-item" href="admission-process.html">Admission Process</a></li>
+                            <li><a class="dropdown-item active" href="fee-structure.html">Fee Structure</a></li>
+                            <li><a class="dropdown-item" href="apply-online.html">Apply Online</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="academicsDropdown" role="button" aria-expanded="false">
+                            Academics
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="cirriculum.html">Curriculum</a></li>
+                            <li><a class="dropdown-item" href="cirriculum.html#special-programs">Special Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="careers.html">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact-us.html">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="fee-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                        <h1 class="display-3 fw-bold mb-4">Transparent & Affordable Fee Structure</h1>
+                        <p class="lead mb-4">Quality education shouldn't break the bank. Our competitive fee structure ensures excellent education remains accessible to all families.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#pricing" class="btn btn-calculate btn-lg">
+                                <i class="fas fa-calculator me-2"></i>Calculate Fees
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="text-center p-3 bg-white rounded-3 shadow">
+                                <h3 class="text-primary mb-1">₹25K+</h3>
+                                <small>Starting From</small>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="text-center p-3 bg-white rounded-3 shadow">
+                                <h3 class="text-success mb-1">50+</h3>
+                                <small>Expert Faculty</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3 bg-white rounded-3 shadow">
+                                <h3 class="text-warning mb-1">4</h3>
+                                <small>Payment Plans</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center p-3 bg-white rounded-3 shadow">
+                                <h3 class="text-info mb-1">0%</h3>
+                                <small>Hidden Charges</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section id="pricing" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Choose Your Class</h2>
+                <p class="section-subtitle">Comprehensive fee structure for all academic levels</p>
+            </div>
+            
+            <div class="row">
+                <!-- Primary Classes -->
+                <div class="col-lg-4 mb-4" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Nuresary PP2</h3>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="price-amount">₹25,000</div>
+                            <div class="price-period">Per Year (Starting From)</div>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i>Chrysalis International Curriculum</li>
+                                <li><i class="fas fa-check"></i>Concept-based, experiential learning</li>
+                                <li><i class="fas fa-check"></i>Activity-oriented classrooms</li>
+                                <li><i class="fas fa-check"></i>Theme-based monthly activities</li>
+                                <li><i class="fas fa-check"></i>Special day celebrations throughout the year</li>
+                                <li><i class="fas fa-check"></i>National festival celebrations</li>
+                                <li><i class="fas fa-check"></i>Development of fine motor skills</li>
+
+                            </ul>
+                            <a href="#calculator" class="btn btn-primary w-100">Calculate Exact Fee</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Middle Classes -->
+                <div class="col-lg-4 mb-4" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <h3>Classes I - V</h3>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="price-amount">₹28,000</div>
+                            <div class="price-period">Per Year (Starting From)</div>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i>Chrysalis International Curriculum</li>
+                                <li><i class="fas fa-check"></i>Student-centered learning</li>
+                                <li><i class="fas fa-check"></i>Trial and error practicals</li>
+                                <li><i class="fas fa-check"></i>Special event activities</li>
+                                <li><i class="fas fa-check"></i>Monthly parent meetings</li>
+                                <li><i class="fas fa-check"></i>Handwriting improvement with Calligraphy</li>
+                                <li><i class="fas fa-check"></i>Focus on grammar & spoken English</li>
+                            </ul>
+                            <a href="#calculator" class="btn btn-warning w-100">Calculate Exact Fee</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- High School -->
+                <div class="col-lg-4 mb-4" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="400">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Classes VI - X</h3>
+                        </div>
+                        <div class="pricing-body">
+                            <div class="price-amount">₹33,000</div>
+                            <div class="price-period">Per Year (Starting From)</div>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i>State Syllabus curriculum</li>
+                                <li><i class="fas fa-check"></i>IIT-NEET Foundation Program</li>
+                                <li><i class="fas fa-check"></i>Olympiad & exam coaching</li>
+                                <li><i class="fas fa-check"></i>Atal Tinkering Lab for hands-on learning</li>
+                                <li><i class="fas fa-check"></i>Cultural Activities for holistic growth</li>
+                                <li><i class="fas fa-check"></i>Project exhibitions</li>
+                                <li><i class="fas fa-check"></i>Career guidance & counselling</li>
+                                <li><i class="fas fa-check"></i>Critical thinking & innovation</li>
+                            </ul>
+                            <a href="#calculator" class="btn btn-primary w-100">Calculate Exact Fee</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fee Calculator -->
+    <section id="calculator" class="calculator-section py-5">
+        <div class="container calculator-container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title text-white">Fee Calculator</h2>
+                <p class="section-subtitle text-light">Get personalized fee calculation for your child</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="calculator-card" data-aos="zoom-in" data-aos-duration="1000">
+                        <h3 class="text-center mb-4">Calculate Your Total Fee</h3>
+                        <form id="feeCalculator">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-white">Select Class</label>
+                                    <select class="form-select" id="classSelect" required>
+                                        <option value="">Choose Class</option>
+                                        <option value="25000">NUR - ₹25,000</option>
+                                        <option value="26000">LKG - ₹26,000</option>
+                                        <option value="27000">UKG - ₹27,000</option>
+                                        <option value="28000">Class I - ₹28,000</option>
+                                        <option value="29000">Class II - ₹29,000</option>
+                                        <option value="30000">Class III - ₹30,000</option>
+                                        <option value="31000">Class IV - ₹31,000</option>
+                                        <option value="32000">Class V - ₹32,000</option>
+                                        <option value="33000">Class VI - ₹33,000</option>
+                                        <option value="34000">Class VII - ₹34,000</option>
+                                        <option value="35000">Class VIII - ₹35,000</option>
+                                        <option value="36000">Class IX - ₹36,000</option>
+                                        <option value="42000">Class X - ₹42,000</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-white">Payment Plan</label>
+                                    <select class="form-select" id="paymentPlan">
+                                        <option value="0.95">Annual Payment (5% Discount)</option>
+                                        <option value="0.98">Quarterly Payment (2% Discount)</option>
+                                        <option value="1">Monthly Payment (No Discount)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label class="form-label text-white">Optional Services</label>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="transport" value="9000">
+                                        <label class="form-check-label text-white" for="transport">
+                                            <i class="fas fa-bus me-2"></i>Transport Service - ₹9,000
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="hostel" value="8000">
+                                        <label class="form-check-label text-white" for="hostel">
+                                            <i class="fas fa-bed me-2"></i>Navodaya/IIT - ₹8,000
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="button" class="btn btn-calculate btn-lg" onclick="calculateFee()">
+                                    <i class="fas fa-calculator me-2"></i>Calculate Total Fee
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div id="feeResult" class="result-card">
+                            <h3>Your Total Annual Fee</h3>
+                            <h1 id="totalAmount">₹0</h1>
+                            <p id="installmentAmount" class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Flexible Payment Options</h2>
+                <p class="section-subtitle">Choose the payment method that works best for you</p>
+            </div>
+            <div class="payment-methods">
+                <div class="payment-card" data-aos="fade-up" data-aos-duration="800">
+                    <div class="payment-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h4>Online Payment</h4>
+                    <p>Secure online payments via credit/debit cards, net banking, or UPI</p>  
+                </div>
+
+                <div class="payment-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="payment-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h4>Bank Transfer</h4>
+                    <p>Direct bank transfer via NEFT/RTGS to our school account</p>
+                </div>
+
+                <div class="payment-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="payment-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4>Cash Payment</h4>
+                    <p>Pay directly at the school office during working hours</p>
+                </div>
+
+                <div class="payment-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                    <div class="payment-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h4>Installments</h4>
+                    <p>Pay in quarterly or monthly installments with minimal charges</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8" data-aos="fade-right" data-aos-duration="800">
+                    <h3>Have Questions About Fees?</h3>
+                    <p class="lead">Our fee counselors are available to help you understand the fee structure, payment options, and scholarship opportunities.</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Fee Helpline</h6>
+                                    <p class="mb-0 text-primary">+91 6300816293</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle p-3 me-3">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Email Support</h6>
+                                    <p class="mb-0 text-success">fees@progresshighschool.edu</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center" data-aos="fade-left" data-aos-duration="800">
+                    <a href="#" class="btn btn-calculate btn-lg">
+                        <i class="fas fa-comments me-2"></i>Schedule Fee Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer py-5 bg-dark text-white" style="background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%) !important; border-top: 3px solid #dc3545 !important;">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6 col-md-6 mb-3 mb-md-0" data-aos="fade-right" data-aos-duration="800">
+                    <div class="footer-content">
+                        <h5 class="text-white mb-2">Progress High School</h5>
+                        <p class="mb-2 text-light">&copy; 2025 Progress High School. All rights reserved.</p>
+                        <p class="mb-0 text-light small">Empowering minds, shaping futures since 1993</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 text-md-end text-center" data-aos="fade-left" data-aos-duration="800">
+                    <div class="footer-social">
+                        <h6 class="text-white mb-3">Follow Us</h6>
+                        <div class="social-links d-flex justify-content-md-end justify-content-center gap-3">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                once: true,
+                offset: 100,
+                duration: 800,
+                easing: 'ease-in-out'
+            });
+            
+            // Page Loader
+            const loaderWrapper = document.querySelector('.loader-wrapper');
+            
+            // Hide loader after page is fully loaded
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loaderWrapper.style.opacity = '0';
+                    loaderWrapper.style.visibility = 'hidden';
+                    
+                    // Trigger AOS refresh for better animation timing after loader disappears
+                    setTimeout(function() {
+                        AOS.refresh();
+                    }, 500);
+                }, 1500); // Wait 1.5 seconds before hiding loader
+            });
+            
+            // Custom navbar toggler functionality
+            const navbarToggler = document.querySelector('.custom-toggler');
+            const navbarCollapse = document.querySelector('#navbarNav');
+            
+            navbarToggler.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('show.bs.collapse', function() {
+                navbarToggler.classList.add('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('hide.bs.collapse', function() {
+                navbarToggler.classList.remove('collapsed');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Fee Calculator Function
+        function calculateFee() {
+            const classSelect = document.getElementById('classSelect');
+            const paymentPlan = document.getElementById('paymentPlan');
+            const transport = document.getElementById('transport');
+            const hostel = document.getElementById('hostel');
+            const meals = document.getElementById('meals');
+            const activities = document.getElementById('activities');
+            
+            if (!classSelect.value) {
+                alert('Please select a class');
+                return;
+            }
+            
+            let baseFee = parseInt(classSelect.value);
+            let additionalFees = 0;
+            
+            if (transport.checked) additionalFees += parseInt(transport.value);
+            if (hostel.checked) additionalFees += parseInt(hostel.value);
+            
+            let totalFee = (baseFee + additionalFees) * parseFloat(paymentPlan.value);
+            
+            document.getElementById('totalAmount').textContent = '₹' + totalFee.toLocaleString('en-IN');
+            
+            let installmentText = '';
+            if (paymentPlan.value == '0.95') {
+                installmentText = 'Annual Payment (5% Discount Applied)';
+            } else if (paymentPlan.value == '0.98') {
+                installmentText = 'Quarterly Payment: ₹' + Math.ceil(totalFee/4).toLocaleString('en-IN') + ' per quarter';
+            } else {
+                installmentText = 'Monthly Payment: ₹' + Math.ceil(totalFee/10).toLocaleString('en-IN') + ' per month';
+            }
+            
+            document.getElementById('installmentAmount').textContent = installmentText;
+            document.getElementById('feeResult').classList.add('show');
+        }
+    </script>
+</body>
+</html>

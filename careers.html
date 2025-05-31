@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - Progress High School</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Include all the styles from styles.css */
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            overflow-x: hidden;
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+
+        /* Page Loader Styles */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .loader {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .loader-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulse 1.5s infinite;
+        }
+
+        .loader-text {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .loader-circle {
+            position: absolute;
+            border: 4px solid transparent;
+            border-radius: 50%;
+        }
+
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            border-top-color: #dc3545;
+            animation: spin 2s linear infinite;
+        }
+
+        .circle-2 {
+            width: 100px;
+            height: 100px;
+            top: 10px;
+            left: 10px;
+            border-right-color: #ffc107;
+            animation: spin 2s linear infinite reverse;
+        }
+
+        .circle-3 {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            left: 20px;
+            border-bottom-color: #28a745;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+            border-bottom: 3px solid #dc3545;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-image {
+            height: 55px;
+            width: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .custom-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+            position: relative;
+            background: transparent;
+        }
+
+        .custom-toggler:focus {
+            box-shadow: none;
+        }
+
+        .custom-toggler .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            transition: all 0.3s ease;
+            opacity: 1;
+        }
+
+        .custom-toggler .close-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: #333;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .custom-toggler.collapsed .navbar-toggler-icon {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+
+        .custom-toggler.collapsed .close-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        .nav-link {
+            font-weight: 600;
+            padding: 0.75rem 1.25rem !important;
+            color: #2c3e50 !important;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            margin: 0 0.25rem;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #dc3545, #ffc107);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 80%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #dc3545 !important;
+            background-color: rgba(220, 53, 69, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 1rem;
+            padding: 1rem 0;
+            margin-top: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            min-width: 220px;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            margin: 0.25rem 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .dropdown:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* Hero Section */
+        .careers-hero {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.9), rgba(231, 76, 60, 0.9)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .careers-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="careers" width="40" height="40" patternUnits="userSpaceOnUse"><rect x="10" y="10" width="20" height="20" fill="white" opacity="0.1" rx="3"/><circle cx="20" cy="30" r="2" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23careers)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section Styles */
+        .section-title {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #dc3545, #ffc107);
+        }
+
+        .section-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Job Cards */
+        .job-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border-left: 4px solid #dc3545;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-title {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-department {
+            color: #dc3545;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .job-requirements {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .job-requirements li {
+            padding: 0.25rem 0;
+            color: #6c757d;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .job-requirements li::before {
+            content: "•";
+            color: #dc3545;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .apply-btn {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+            color: white;
+        }
+
+        /* Benefits Section */
+        .benefits-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .benefits-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            border-top: 3px solid #dc3545;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #ffc107;
+            color: #2c3e50;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .careers-hero {
+                min-height: 50vh;
+                background-attachment: scroll;
+            }
+
+            .job-card {
+                margin-bottom: 2rem;
+            }
+
+            .section-title::after {
+                left: 0;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.5rem 0;
+            }
+
+            .logo {
+                height: 45px;
+                width: 45px;
+            }
+
+            .brand-image {
+                height: 35px;
+            }
+
+            .job-card {
+                padding: 1.5rem;
+            }
+
+            .benefits-card {
+                padding: 1.5rem;
+            }
+
+            .benefit-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="loader-wrapper">
+        <div class="loader">
+            <div class="loader-circle circle-1"></div>
+            <div class="loader-circle circle-2"></div>
+            <div class="loader-circle circle-3"></div>
+            <img src="assets/images/logo.png" alt="Progress High School Logo" class="loader-logo">
+        </div>
+        <div class="loader-text">PROGRESS HIGH SCHOOL</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.png" alt="Progress High School Logo" class="logo me-3">
+                <img src="assets/images/banner-logo.png" alt="Progress High School" class="brand-image">
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-x-lg close-icon"></i>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="aboutDropdown" role="button" aria-expanded="false">
+                            About Us
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="index.html#welcome">Welcome</a></li>
+                            <li><a class="dropdown-item" href="index.html#leadership">Leadership</a></li>
+                            <li><a class="dropdown-item" href="index.html#vision">Vision & Mission</a></li>
+                            <li><a class="dropdown-item" href="index.html#achievements">Achievements</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="admissionDropdown" role="button" aria-expanded="false">
+                            Admission
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="admissionDropdown">
+                            <li><a class="dropdown-item" href="admission-process.html">Admission Process</a></li>
+                            <li><a class="dropdown-item" href="fee-structure.html">Fee Structure</a></li>
+                            <li><a class="dropdown-item" href="apply-online.html">Apply Online</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="academicsDropdown" role="button" aria-expanded="false">
+                            Academics
+                            <i class="bi bi-chevron-down ms-1 dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="academicsDropdown">
+                            <li><a class="dropdown-item" href="cirriculum.html">Curriculum</a></li>
+                            <li><a class="dropdown-item" href="cirriculum.html#special-programs">Special Programs</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="careers.html">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact-us.html">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="careers-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                        <h1 class="display-3 fw-bold mb-4">Join Our Team</h1>
+                        <p class="lead mb-4">Be part of our mission to shape young minds and build the future. We're looking for passionate educators and dedicated professionals to join our Progress High School family.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#current-openings" class="btn btn-light btn-lg">
+                                <i class="fas fa-briefcase me-2"></i>View Openings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Join Us Section -->
+    <section id="benefits" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Why Work With Us?</h2>
+                <p class="section-subtitle">Discover the benefits of being part of our educational community</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h5>Professional Growth</h5>
+                        <p>Continuous learning opportunities, workshops, and career advancement programs to help you grow professionally.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5>Collaborative Environment</h5>
+                        <p>Work with a team of dedicated professionals who share your passion for education and student success.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h5>Work-Life Balance</h5>
+                        <p>Flexible schedules, supportive management, and a healthy work environment that values your well-being.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h5>Recognition & Rewards</h5>
+                        <p>Competitive compensation, performance bonuses, and recognition programs for outstanding contributions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Openings Section -->
+    <section id="current-openings" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Current Job Openings</h2>
+                <p class="section-subtitle">Explore exciting career opportunities at Progress High School</p>
+            </div>
+            <div class="row">
+                <!-- Teaching Positions -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div class="job-card">
+                        <h4 class="job-title">Mathematics Teacher</h4>
+                        <p class="job-department">Academic Department - Secondary Level</p>
+                        <p>We are seeking a passionate Mathematics teacher for grades 6-10 with strong subject knowledge and innovative teaching methods.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>M.Sc in Mathematics with B.Ed qualification</li>
+                            <li>Minimum 2 years teaching experience</li>
+                            <li>Strong communication and classroom management skills</li>
+                            <li>Proficiency in modern teaching methodologies</li>
+                            <li>Experience with CBSE/State Board curriculum</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for Mathematics Teacher" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="job-card">
+                        <h4 class="job-title">English Teacher</h4>
+                        <p class="job-department">Academic Department - Primary & Secondary</p>
+                        <p>Join our English department to inspire students in language arts, literature, and communication skills.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>M.A in English Literature with B.Ed</li>
+                            <li>Excellent spoken and written English skills</li>
+                            <li>Experience in creative writing and literature</li>
+                            <li>Ability to conduct debates and elocution programs</li>
+                            <li>Minimum 1-3 years teaching experience</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for English Teacher" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="job-card">
+                        <h4 class="job-title">Science Teacher</h4>
+                        <p class="job-department">Academic Department - Physics/Chemistry/Biology</p>
+                        <p>Seeking dedicated science teachers to make learning engaging through practical experiments and innovative methods.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>M.Sc in Physics/Chemistry/Biology with B.Ed</li>
+                            <li>Laboratory management experience</li>
+                            <li>Knowledge of safety protocols</li>
+                            <li>Experience with project-based learning</li>
+                            <li>Familiarity with Atal Tinkering Lab activities</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for Science Teacher" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                    <div class="job-card">
+                        <h4 class="job-title">Primary Teacher</h4>
+                        <p class="job-department">Primary Department - Grades 1-5</p>
+                        <p>Nurture young minds with our Chrysalis curriculum and create a foundation for lifelong learning.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>B.Ed or D.Ed with graduation</li>
+                            <li>Experience with Chrysalis or similar curriculum</li>
+                            <li>Creative teaching and activity planning skills</li>
+                            <li>Patience and understanding of child psychology</li>
+                            <li>Multilingual abilities preferred</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for Primary Teacher" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Administrative Positions -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="800">
+                    <div class="job-card">
+                        <h4 class="job-title">Academic Coordinator</h4>
+                        <p class="job-department">Administration - Academic Affairs</p>
+                        <p>Lead academic planning, curriculum implementation, and coordinate with teachers for educational excellence.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>Master's degree with B.Ed and 5+ years experience</li>
+                            <li>Leadership and team management skills</li>
+                            <li>Curriculum planning and assessment expertise</li>
+                            <li>Strong organizational and communication abilities</li>
+                            <li>Experience with educational technology</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for Academic Coordinator" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="1000">
+                    <div class="job-card">
+                        <h4 class="job-title">Sports Coach</h4>
+                        <p class="job-department">Sports Department - Physical Education</p>
+                        <p>Train students in various sports, organize competitions, and promote physical fitness and sportsmanship.</p>
+                        <h6>Requirements:</h6>
+                        <ul class="job-requirements">
+                            <li>B.P.Ed or M.P.Ed qualification</li>
+                            <li>Coaching certification in specific sports</li>
+                            <li>Experience in organizing sports events</li>
+                            <li>First aid and safety training</li>
+                            <li>Enthusiasm for student fitness and wellness</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>Hanamkonda</span>
+                            <a href="mailto:careers@progresshighschool.edu?subject=Application for Sports Coach" class="apply-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Process Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="section-title">Application Process</h2>
+                <p class="section-subtitle">Simple steps to join our team</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h5>1. Submit Application</h5>
+                        <p>Send your resume and cover letter to our HR department via email or apply online.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h5>2. Initial Screening</h5>
+                        <p>Our HR team will review your application and contact qualified candidates within 48 hours.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h5>3. Interview Process</h5>
+                        <p>Participate in our comprehensive interview process including demo classes for teaching positions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
+                    <div class="benefits-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h5>4. Welcome Aboard</h5>
+                        <p>Complete documentation, orientation program, and begin your journey with Progress High School.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact HR Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8" data-aos="fade-right" data-aos-duration="800">
+                    <h2 class="section-title">Ready to Join Our Team?</h2>
+                    <p class="lead">We're always looking for passionate educators and dedicated professionals. Even if you don't see a position that matches your skills right now, we'd love to hear from you.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-envelope text-danger me-3 fs-4"></i>
+                                <div>
+                                    <h6 class="mb-0">Email Us</h6>
+                                    <p class="mb-0 text-muted">careers@progresshighschool.edu</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-phone text-danger me-3 fs-4"></i>
+                                <div>
+                                    <h6 class="mb-0">Call Us</h6>
+                                    <p class="mb-0 text-muted">+91 6300816293</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                    <div class="text-center">
+                        <a href="mailto:careers@progresshighschool.edu" class="btn btn-danger btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Send Your Resume
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6 col-md-6 mb-3 mb-md-0" data-aos="fade-right" data-aos-duration="800">
+                    <div class="footer-content">
+                        <h5 class="text-white mb-2">Progress High School</h5>
+                        <p class="mb-2 text-light">&copy; 2025 Progress High School. All rights reserved.</p>
+                        <p class="mb-0 text-light small">Empowering minds, shaping futures since 1993</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 text-md-end text-center" data-aos="fade-left" data-aos-duration="800">
+                    <div class="footer-social">
+                        <h6 class="text-white mb-3">Follow Us</h6>
+                        <div class="social-links d-flex justify-content-md-end justify-content-center gap-3">
+                            <a href="https://facebook.com" target="_blank" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://youtube.com" target="_blank" class="social-link" aria-label="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" class="social-link" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                once: true,
+                offset: 100,
+                duration: 800,
+                easing: 'ease-in-out'
+            });
+            
+            // Page Loader
+            const loaderWrapper = document.querySelector('.loader-wrapper');
+            
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loaderWrapper.style.opacity = '0';
+                    loaderWrapper.style.visibility = 'hidden';
+                    setTimeout(function() {
+                        AOS.refresh();
+                    }, 500);
+                }, 1500);
+            });
+            
+            // Custom navbar toggler functionality
+            const navbarToggler = document.querySelector('.custom-toggler');
+            const navbarCollapse = document.querySelector('#navbarNav');
+            
+            navbarToggler.addEventListener('click', function() {
+                this.classList.toggle('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('show.bs.collapse', function() {
+                navbarToggler.classList.add('collapsed');
+            });
+            
+            navbarCollapse.addEventListener('hide.bs.collapse', function() {
+                navbarToggler.classList.remove('collapsed');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
