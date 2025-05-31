@@ -1,8 +1,9 @@
 /* General Styles */
-*{
-  margin: 0px;
-  padding: 0px;
-  overflow-x: hidden;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 body {
   font-family: "Georgia", "Times New Roman", serif;
